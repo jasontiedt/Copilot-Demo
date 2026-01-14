@@ -46,5 +46,33 @@ namespace ContactsApp.Data
             await _context.SaveChangesAsync();
             return true;
         }
+
+            public async Task<Contact> GetByEmailAsync(string email)
+            {
+                return await _context.Contacts.FirstOrDefaultAsync(c => c.Email == email);
+            }
+
+            public async Task<Contact> GetByPhoneAsync(string phone)
+            {
+                return await _context.Contacts.FirstOrDefaultAsync(c => c.Phone == phone);
+            }
+
+            public async Task<Contact> UpdateEmailAsync(int id, string email)
+            {
+                var contact = await _context.Contacts.FindAsync(id);
+                if (contact == null) return null;
+                contact.Email = email;
+                await _context.SaveChangesAsync();
+                return contact;
+            }
+
+            public async Task<Contact> UpdatePhoneAsync(int id, string phone)
+            {
+                var contact = await _context.Contacts.FindAsync(id);
+                if (contact == null) return null;
+                contact.Phone = phone;
+                await _context.SaveChangesAsync();
+                return contact;
+            }
     }
 }

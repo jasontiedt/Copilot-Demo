@@ -11,5 +11,10 @@ namespace ContactsApp.Data
         Task<Contact> AddAsync(Contact contact);
         Task<Contact> UpdateAsync(Contact contact);
         Task<bool> DeleteAsync(int id);
+
+            Task<Contact> GetByEmailAsync(string email);
+            Task<Contact> GetByPhoneAsync(string phone);
+            Task<Contact> UpdateEmailAsync(int id, string email);
+            Task<Contact> UpdatePhoneAsync(int id, string phone);
     }
 }

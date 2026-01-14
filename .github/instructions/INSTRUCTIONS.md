@@ -16,21 +16,21 @@ This document outlines best practices, conventions, and custom instructions for 
 - Secure endpoints using authentication and authorization attributes as needed.
 - Use logging and exception handling middleware for error management.
 - Do not store secrets in `appsettings.json`.
+- Always validate phone numbers using regex for format xxx-xxx-xxxx.
 
 ## API Design
-- Follow RESTful conventions for endpoints (GET, POST, PUT, DELETE).
-- Use meaningful route names and HTTP verbs.
-- Document endpoints using XML comments or Swagger annotations.
 
 ## Testing
-- Write unit tests for controllers, services, and repositories.
-- Cover both positive and negative scenarios.
-- Use mocking frameworks for dependencies.
+ Write unit tests for controllers, services, and repositories.
+ Cover both positive and negative scenarios.
+ Always include unit tests for the following edge cases:
+	 1. Not Found: Valid input but no matching record (should return NotFound).
+	 2. Null or Empty: Null or empty input values (should return BadRequest).
+	 3. Duplicate: Attempt to create or update with a value that already exists (should handle conflict or error).
+	 4. Special Characters: Input containing special or unicode characters (should validate or reject as appropriate).
+ Use mocking frameworks for dependencies.
 
 ## Extending the Project
-- Add new features by creating new models, repositories, and controllers as needed.
-- Update tests to cover new functionality.
-- Document changes in this instruction file.
 
 ## Prompt Files Directory
 - Store prompt templates, example requests, and custom instructions in the `prompts/` directory.
