@@ -1,4 +1,4 @@
-# C# Spring Boot Converted Project
+# C# Spring Boot Converted Project.
 
 This is a converted version of the Java Spring Boot Contacts application, rewritten in C# using ASP.NET Core best practices.
 
