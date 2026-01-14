@@ -54,5 +54,79 @@ namespace ContactsApp.Controllers
             if (!deleted) return NotFound();
             return NoContent();
         }
+
+            [HttpGet("by-email/{email}")]
+            public async Task<ActionResult<Contact>> GetContactByEmail(string email)
+            {
+                // Validate email format using DataAnnotations
+                if (string.IsNullOrWhiteSpace(email) || email.Length > 256)
+                {
+                    return BadRequest("Invalid email address.");
+                }
+                var emailAttribute = new System.ComponentModel.DataAnnotations.EmailAddressAttribute();
+                if (!emailAttribute.IsValid(email))
+                {
+                    return BadRequest("Invalid email address format.");
+                }
+                var contact = await _repository.GetByEmailAsync(email);
+                if (contact == null) return NotFound();
+                return Ok(contact);
+            }
+
+            [HttpGet("by-phone/{phone}")]
+            public async Task<ActionResult<Contact>> GetContactByPhone(string phone)
+            {
+                // Validate phone format using regex: xxx-xxx-xxxx
+                if (string.IsNullOrWhiteSpace(phone) || phone.Length > 20)
+                {
+                    return BadRequest("Invalid phone number format.");
+                }
+                var phoneRegex = System.Text.RegularExpressions.Regex.Match(phone, @"^\\d{3}-\\d{3}-\\d{4}$");
+                if (!phoneRegex.Success)
+                {
+                    return BadRequest("Phone number must be in format xxx-xxx-xxxx.");
+                }
+                var contact = await _repository.GetByPhoneAsync(phone);
+                if (contact == null) return NotFound();
+                return Ok(contact);
+
+            [HttpPatch("{id}/email")]
+            public async Task<ActionResult<Contact>> UpdateContactEmail(int id, [FromBody] string email)
+            {
+                // Validate email format using DataAnnotations
+                if (string.IsNullOrWhiteSpace(email) || email.Length > 256)
+                {
+                    return BadRequest("Invalid email address.");
+                }
+                var emailAttribute = new System.ComponentModel.DataAnnotations.EmailAddressAttribute();
+                if (!emailAttribute.IsValid(email))
+                {
+                    return BadRequest("Invalid email address format.");
+                }
+                var updated = await _repository.UpdateEmailAsync(id, email);
+                if (updated == null) return NotFound();
+                return Ok(updated);
+            }
+
+            [HttpPatch("{id}/phone")]
+            public async Task<ActionResult<Contact>> UpdateContactPhone(int id, [FromBody] string phone)
+            {
+                // Validate phone format using regex: xxx-xxx-xxxx
+                if (string.IsNullOrWhiteSpace(phone) || phone.Length > 20)
+                {
+                    return BadRequest("Invalid phone number format.");
+                }
+                var phoneRegex = System.Text.RegularExpressions.Regex.Match(phone, @"^\\d{3}-\\d{3}-\\d{4}$");
+                if (!phoneRegex.Success)
+                {
+                    return BadRequest("Phone number must be in format xxx-xxx-xxxx.");
+                }
+                var updated = await _repository.UpdatePhoneAsync(id, phone);
+                if (updated == null) return NotFound();
+                return Ok(updated);
+            }
+            }
+
+
     }
 }
