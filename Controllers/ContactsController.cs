@@ -24,6 +24,31 @@ namespace ContactsApp.Controllers
             return Ok(contacts);
         }
 
+        [HttpGet("by-phone/{phone}")]
+        public async Task<ActionResult<Contact>> GetByPhone(string phone)
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(phone, @"^\d{3}-\d{3}-\d{4}$"))
+            {
+                return BadRequest("Phone number must be in the format xxx-xxx-xxxx");
+            }
+            var contact = await _repository.GetByPhoneAsync(phone);
+            if (contact == null) return NotFound();
+            return Ok(contact);
+        }
+
+        [HttpGet("by-email/{email}")]
+        public async Task<ActionResult<Contact>> GetByEmail(string email)
+        {
+            var emailValidator = new System.ComponentModel.DataAnnotations.EmailAddressAttribute();
+            if (!emailValidator.IsValid(email))
+            {
+                return BadRequest("Invalid email format");
+            }
+            var contact = await _repository.GetByEmailAsync(email);
+            if (contact == null) return NotFound();
+            return Ok(contact);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Contact>> GetContact(int id)
         {
@@ -44,6 +69,31 @@ namespace ContactsApp.Controllers
         {
             if (id != contact.Id) return BadRequest();
             var updated = await _repository.UpdateAsync(contact);
+            return Ok(updated);
+        }
+
+        [HttpPatch("{id}/phone")]
+        public async Task<ActionResult<Contact>> UpdatePhone(int id, [FromBody] string phone)
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(phone, @"^\d{3}-\d{3}-\d{4}$"))
+            {
+                return BadRequest("Phone number must be in the format xxx-xxx-xxxx");
+            }
+            var updated = await _repository.UpdatePhoneAsync(id, phone);
+            if (updated == null) return NotFound();
+            return Ok(updated);
+        }
+
+        [HttpPatch("{id}/email")]
+        public async Task<ActionResult<Contact>> UpdateEmail(int id, [FromBody] string email)
+        {
+            var emailValidator = new System.ComponentModel.DataAnnotations.EmailAddressAttribute();
+            if (!emailValidator.IsValid(email))
+            {
+                return BadRequest("Invalid email format");
+            }
+            var updated = await _repository.UpdateEmailAsync(id, email);
+            if (updated == null) return NotFound();
             return Ok(updated);
         }
 
