@@ -8,6 +8,7 @@ using ContactsApp.Data;
 
 namespace ContactsApp
 {
+    //this is also correct
     //this is correct
     public class Startup
     {
