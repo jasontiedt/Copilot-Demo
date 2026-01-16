@@ -42,6 +42,7 @@ namespace ContactsApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                //some code
             });
         }
     }
