@@ -26,12 +26,12 @@ namespace ContactsApp
                 options.UseInMemoryDatabase("ContactsDb"));
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(); // do we need this?
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() != false)
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
