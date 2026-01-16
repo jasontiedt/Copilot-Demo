@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IvZFs7nUI2M=",
+  "dgSpecHash": "vI2FmGqH7SY=",
   "success": true,
-  "projectFilePath": "C:\\GitRepos\\Copilot-Clean\\cs-copilot\\csharp-springboot-converted\\ContactsApp.csproj",
+  "projectFilePath": "C:\\GitRepos\\Copilot-Demo-walkthrough\\ContactsApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jasontiedt\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\jasontiedt\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.0\\microsoft.aspnetcore.openapi.8.0.0.nupkg.sha512",
